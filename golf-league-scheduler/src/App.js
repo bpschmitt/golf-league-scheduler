@@ -517,7 +517,7 @@ const GolfLeagueManager = () => {
               }`}
             >
               <History size={20} />
-              History ({weeklyArchive.length})
+              Team History ({weeklyArchive.length})
             </button>
             <button
               onClick={() => setActiveTab('stats')}
@@ -528,7 +528,7 @@ const GolfLeagueManager = () => {
               }`}
             >
               <TrendingUp size={20} />
-              Statistics
+              Pairing History
             </button>
             <button
               onClick={() => setActiveTab('seasons')}
@@ -737,7 +737,7 @@ const GolfLeagueManager = () => {
             {activeTab === 'history' && (
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Weekly Archive {currentSeason && `(${currentSeason})`}</h2>
+                  <h2 className="text-xl font-bold">Team History {currentSeason && `(${currentSeason})`}</h2>
                   <div className="flex gap-3">
                     {weeklyArchive.length > 0 && (
                       <>
@@ -791,9 +791,9 @@ const GolfLeagueManager = () => {
             {/* Statistics Tab */}
             {activeTab === 'stats' && (
               <div>
-                <h2 className="text-xl font-bold mb-4">Pairing Statistics</h2>
+                <h2 className="text-xl font-bold mb-4">Pairing History</h2>
                 {players.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">Add players to see statistics.</p>
+                  <p className="text-gray-500 text-center py-8">Add players to see pairing history.</p>
                 ) : (
                   <div className="space-y-4">
                     {players.map((player) => {
