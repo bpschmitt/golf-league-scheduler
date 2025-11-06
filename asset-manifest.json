@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/golf-league-scheduler/static/css/main.db91652b.css",
-    "main.js": "/golf-league-scheduler/static/js/main.1cc8f9f9.js",
+    "main.css": "/golf-league-scheduler/static/css/main.60b36704.css",
+    "main.js": "/golf-league-scheduler/static/js/main.d2bbfb90.js",
     "static/js/453.c01955ba.chunk.js": "/golf-league-scheduler/static/js/453.c01955ba.chunk.js",
     "index.html": "/golf-league-scheduler/index.html",
-    "main.db91652b.css.map": "/golf-league-scheduler/static/css/main.db91652b.css.map",
-    "main.1cc8f9f9.js.map": "/golf-league-scheduler/static/js/main.1cc8f9f9.js.map",
+    "main.60b36704.css.map": "/golf-league-scheduler/static/css/main.60b36704.css.map",
+    "main.d2bbfb90.js.map": "/golf-league-scheduler/static/js/main.d2bbfb90.js.map",
     "453.c01955ba.chunk.js.map": "/golf-league-scheduler/static/js/453.c01955ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.db91652b.css",
-    "static/js/main.1cc8f9f9.js"
+    "static/css/main.60b36704.css",
+    "static/js/main.d2bbfb90.js"
   ]
 }
