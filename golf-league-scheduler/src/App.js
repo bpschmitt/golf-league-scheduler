@@ -445,26 +445,28 @@ const GolfLeagueManager = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-2 sm:p-4">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex justify-between items-start">
+        <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
             <div>
-              <h1 className="text-3xl font-bold text-green-800 mb-2">Golf League Team Generator</h1>
-              <p className="text-gray-600">Smart team generation with pairing history tracking</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-green-800 mb-1 sm:mb-2">Golf League Team Generator</h1>
+              <p className="text-sm sm:text-base text-gray-600">Smart team generation with pairing history tracking</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 w-full sm:w-auto">
               <button
                 onClick={exportAllData}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+                className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2 text-sm sm:text-base"
                 title="Export all data"
               >
-                <Download size={20} />
-                Export
+                <Download size={18} className="sm:hidden" />
+                <Download size={20} className="hidden sm:block" />
+                <span className="hidden sm:inline">Export</span>
               </button>
-              <label className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2 cursor-pointer">
-                <Upload size={20} />
-                Import
+              <label className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base">
+                <Upload size={18} className="sm:hidden" />
+                <Upload size={20} className="hidden sm:block" />
+                <span className="hidden sm:inline">Import</span>
                 <input
                   type="file"
                   accept=".json"
@@ -503,66 +505,76 @@ const GolfLeagueManager = () => {
         )}
 
         {/* Navigation Tabs */}
-        <div className="bg-white rounded-lg shadow-lg mb-6">
-          <div className="flex border-b">
+        <div className="bg-white rounded-lg shadow-lg mb-4 sm:mb-6">
+          <div className="flex overflow-x-auto border-b scrollbar-hide">
             <button
               onClick={() => setActiveTab('players')}
-              className={`flex items-center gap-2 px-6 py-3 font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 font-medium transition whitespace-nowrap text-sm sm:text-base ${
                 activeTab === 'players'
                   ? 'border-b-2 border-green-600 text-green-600'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              <Users size={20} />
-              Players ({players.length})
+              <Users size={18} className="sm:hidden" />
+              <Users size={20} className="hidden sm:block" />
+              <span className="hidden sm:inline">Players ({players.length})</span>
+              <span className="sm:hidden">Players</span>
             </button>
             <button
               onClick={() => setActiveTab('teams')}
-              className={`flex items-center gap-2 px-6 py-3 font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 font-medium transition whitespace-nowrap text-sm sm:text-base ${
                 activeTab === 'teams'
                   ? 'border-b-2 border-green-600 text-green-600'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              <Shuffle size={20} />
-              Pending Teams
+              <Shuffle size={18} className="sm:hidden" />
+              <Shuffle size={20} className="hidden sm:block" />
+              <span className="hidden sm:inline">Pending Teams</span>
+              <span className="sm:hidden">Teams</span>
             </button>
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex items-center gap-2 px-6 py-3 font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 font-medium transition whitespace-nowrap text-sm sm:text-base ${
                 activeTab === 'history'
                   ? 'border-b-2 border-green-600 text-green-600'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              <History size={20} />
-              Team History ({weeklyArchive.length})
+              <History size={18} className="sm:hidden" />
+              <History size={20} className="hidden sm:block" />
+              <span className="hidden sm:inline">Team History ({weeklyArchive.length})</span>
+              <span className="sm:hidden">History</span>
             </button>
             <button
               onClick={() => setActiveTab('stats')}
-              className={`flex items-center gap-2 px-6 py-3 font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 font-medium transition whitespace-nowrap text-sm sm:text-base ${
                 activeTab === 'stats'
                   ? 'border-b-2 border-green-600 text-green-600'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              <TrendingUp size={20} />
-              Pairing History
+              <TrendingUp size={18} className="sm:hidden" />
+              <TrendingUp size={20} className="hidden sm:block" />
+              <span className="hidden sm:inline">Pairing History</span>
+              <span className="sm:hidden">Pairs</span>
             </button>
             <button
               onClick={() => setActiveTab('seasons')}
-              className={`flex items-center gap-2 px-6 py-3 font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 font-medium transition whitespace-nowrap text-sm sm:text-base ${
                 activeTab === 'seasons'
                   ? 'border-b-2 border-green-600 text-green-600'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              <FolderOpen size={20} />
-              Seasons ({seasons.length})
+              <FolderOpen size={18} className="sm:hidden" />
+              <FolderOpen size={20} className="hidden sm:block" />
+              <span className="hidden sm:inline">Seasons ({seasons.length})</span>
+              <span className="sm:hidden">Seasons</span>
             </button>
           </div>
 
-          <div className="p-6">
+          <div className="p-3 sm:p-6">
             {/* Players Tab */}
             {activeTab === 'players' && (
               <div>
