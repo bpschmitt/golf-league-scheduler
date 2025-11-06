@@ -432,6 +432,18 @@ const GolfLeagueManager = () => {
     }));
   };
 
+  const expandAllPlayers = () => {
+    const allExpanded = {};
+    players.forEach(player => {
+      allExpanded[player.id] = true;
+    });
+    setExpandedPlayers(allExpanded);
+  };
+
+  const collapseAllPlayers = () => {
+    setExpandedPlayers({});
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4">
       <div className="max-w-6xl mx-auto">
@@ -798,7 +810,25 @@ const GolfLeagueManager = () => {
             {/* Statistics Tab */}
             {activeTab === 'stats' && (
               <div>
-                <h2 className="text-xl font-bold mb-4">Pairing History</h2>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Pairing History</h2>
+                  {players.length > 0 && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={expandAllPlayers}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
+                      >
+                        Expand All
+                      </button>
+                      <button
+                        onClick={collapseAllPlayers}
+                        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition text-sm"
+                      >
+                        Collapse All
+                      </button>
+                    </div>
+                  )}
+                </div>
                 {players.length === 0 ? (
                   <p className="text-gray-500 text-center py-8">Add players to see pairing history.</p>
                 ) : (
