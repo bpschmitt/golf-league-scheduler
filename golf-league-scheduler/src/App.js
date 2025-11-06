@@ -116,8 +116,6 @@ const GolfLeagueManager = () => {
       const startIndex = lines[0].toLowerCase().includes('name') || lines[0].toLowerCase().includes('handicap') ? 1 : 0;
       
       const newPlayers = [];
-      const updatedPlayers = [];
-      let updatedPlayersList = [...players];
       
       for (let i = startIndex; i < lines.length; i++) {
         const line = lines[i].trim();
@@ -131,39 +129,18 @@ const GolfLeagueManager = () => {
           const handicap = parseFloat(parts[1]);
           
           if (name && !isNaN(handicap)) {
-            const existingPlayerIndex = updatedPlayersList.findIndex(
-              p => p.name.toLowerCase() === name.toLowerCase()
-            );
-
-            if (existingPlayerIndex !== -1) {
-              // Update existing player's handicap
-              updatedPlayersList[existingPlayerIndex].handicap = handicap;
-              updatedPlayers.push(name);
-            } else {
-              // Add new player
-              const newPlayer = {
-                id: Date.now() + i + Math.random(),
-                name: name,
-                handicap: handicap
-              };
-              updatedPlayersList.push(newPlayer);
-              newPlayers.push(name);
-            }
+            newPlayers.push({
+              id: Date.now() + i + Math.random(),
+              name: name,
+              handicap: handicap
+            });
           }
         }
       }
       
-      if (newPlayers.length > 0 || updatedPlayers.length > 0) {
-        setPlayers(updatedPlayersList);
-        let message = '';
-        if (newPlayers.length > 0) {
-          message += `Added ${newPlayers.length} new player${newPlayers.length > 1 ? 's' : ''}`;
-        }
-        if (updatedPlayers.length > 0) {
-          if (message) message += ', ';
-          message += `Updated ${updatedPlayers.length} existing player${updatedPlayers.length > 1 ? 's' : ''}`;
-        }
-        setUploadError(`Success! ${message}`);
+      if (newPlayers.length > 0) {
+        setPlayers(newPlayers);
+        setUploadError(`Success! Imported ${newPlayers.length} players (replaced existing roster)`);
         setCsvText('');
       } else {
         setUploadError('No valid players found in CSV. Format should be: Name, Handicap');
