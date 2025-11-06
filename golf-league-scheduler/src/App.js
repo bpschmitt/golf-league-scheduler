@@ -310,6 +310,11 @@ const GolfLeagueManager = () => {
       return;
     }
 
+    if (players.length % 4 !== 0) {
+      alert(`Cannot generate teams! You have ${players.length} players, but the number must be divisible by 4. Please add or remove ${4 - (players.length % 4)} player(s).`);
+      return;
+    }
+
     // Sort players by handicap (lowest to highest)
     const sortedPlayers = [...players].sort((a, b) => a.handicap - b.handicap);
     const numTeams = Math.floor(sortedPlayers.length / 4);
