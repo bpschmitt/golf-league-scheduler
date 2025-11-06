@@ -18,6 +18,7 @@ const GolfLeagueManager = () => {
   const [seasonName, setSeasonName] = useState('');
   const [seasons, setSeasons] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(null);
+  const [messageModal, setMessageModal] = useState({ show: false, title: '', message: '', type: 'info' });
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -56,6 +57,15 @@ const GolfLeagueManager = () => {
       localStorage.setItem('currentSeason', currentSeason);
     }
   }, [currentSeason]);
+
+  // Helper function to show messages
+  const showMessage = (title, message, type = 'info') => {
+    setMessageModal({ show: true, title, message, type });
+  };
+
+  const closeMessage = () => {
+    setMessageModal({ show: false, title: '', message: '', type: 'info' });
+  };
 
   const addPlayer = () => {
     if (newPlayerName.trim() && newPlayerHandicap !== '') {
@@ -201,7 +211,7 @@ const GolfLeagueManager = () => {
 
   const saveCurrentSeason = () => {
     if (!seasonName.trim()) {
-      alert('Please enter a season name');
+      showMessage('Season Name Required', 'Please enter a season name', 'error');
       return;
     }
 
@@ -217,7 +227,7 @@ const GolfLeagueManager = () => {
     setSeasons([season, ...seasons]);
     setSeasonName('');
     setShowSaveSeasonModal(false);
-    alert(`Season "${season.name}" saved successfully!`);
+    showMessage('Season Saved', `Season "${season.name}" saved successfully!`, 'success');
   };
 
   const loadSeason = (season) => {
@@ -272,14 +282,14 @@ const GolfLeagueManager = () => {
             setSeasons(data.seasons || []);
             setCurrentSeason(data.currentSeason || null);
             setCurrentTeams([]);
-            alert('Data imported successfully!');
+            showMessage('Import Successful', 'Data imported successfully!', 'success');
             event.target.value = '';
           }
         } else {
-          alert('Invalid data file format');
+          showMessage('Import Failed', 'Invalid data file format', 'error');
         }
       } catch (error) {
-        alert('Error reading file. Please check the format.');
+        showMessage('Import Error', 'Error reading file. Please check the format.', 'error');
       }
     };
     reader.readAsText(file);
@@ -306,12 +316,12 @@ const GolfLeagueManager = () => {
 
   const generateTeams = () => {
     if (players.length < 4) {
-      alert('Need at least 4 players to generate teams!');
+      showMessage('Not Enough Players', 'Need at least 4 players to generate teams!', 'error');
       return;
     }
 
     if (players.length % 4 !== 0) {
-      alert(`Cannot generate teams! You have ${players.length} players, but the number must be divisible by 4. Please add or remove ${4 - (players.length % 4)} player(s).`);
+      showMessage('Invalid Player Count', `Cannot generate teams! You have ${players.length} players, but the number must be divisible by 4. Please add or remove ${4 - (players.length % 4)} player(s).`, 'error');
       return;
     }
 
@@ -391,7 +401,7 @@ const GolfLeagueManager = () => {
     setWeeklyArchive([weekEntry, ...weeklyArchive]);
     updatePairingHistory(currentTeams);
     setCurrentTeams([]);
-    alert('Teams saved to history!');
+    showMessage('Teams Saved', 'Teams saved to history!', 'success');
   };
 
   const getMostPlayedWith = (playerId) => {
@@ -911,6 +921,36 @@ const GolfLeagueManager = () => {
                   className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                 >
                   Clear History
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Message Modal */}
+        {messageModal.show && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl">
+              <h3 className={`text-xl font-bold mb-4 ${
+                messageModal.type === 'error' ? 'text-red-600' :
+                messageModal.type === 'success' ? 'text-green-600' :
+                'text-blue-600'
+              }`}>
+                {messageModal.title}
+              </h3>
+              <p className="text-gray-600 mb-6">
+                {messageModal.message}
+              </p>
+              <div className="flex justify-end">
+                <button
+                  onClick={closeMessage}
+                  className={`px-6 py-2 text-white rounded-lg transition ${
+                    messageModal.type === 'error' ? 'bg-red-600 hover:bg-red-700' :
+                    messageModal.type === 'success' ? 'bg-green-600 hover:bg-green-700' :
+                    'bg-blue-600 hover:bg-blue-700'
+                  }`}
+                >
+                  OK
                 </button>
               </div>
             </div>
