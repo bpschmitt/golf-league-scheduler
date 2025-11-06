@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Plus, Trash2, Shuffle, History, TrendingUp, Save, FolderOpen, Download, Upload } from 'lucide-react';
+import { Users, Plus, Trash2, Shuffle, History, TrendingUp, Save, FolderOpen, Download, Upload, ChevronDown, ChevronRight } from 'lucide-react';
 
 const GolfLeagueManager = () => {
   const [players, setPlayers] = useState([]);
@@ -19,6 +19,7 @@ const GolfLeagueManager = () => {
   const [seasons, setSeasons] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(null);
   const [messageModal, setMessageModal] = useState({ show: false, title: '', message: '', type: 'info' });
+  const [expandedPlayers, setExpandedPlayers] = useState({});
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -404,7 +405,7 @@ const GolfLeagueManager = () => {
     showMessage('Teams Saved', 'Teams saved to history!', 'success');
   };
 
-  const getMostPlayedWith = (playerId) => {
+  const getAllPlayedWith = (playerId) => {
     const counts = {};
     Object.keys(pairingHistory).forEach(key => {
       const [id1, id2] = key.split('-').map(Number);
@@ -414,15 +415,21 @@ const GolfLeagueManager = () => {
         counts[id1] = pairingHistory[key];
       }
     });
-    
+
     const sorted = Object.entries(counts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
-    
+      .sort((a, b) => b[1] - a[1]);
+
     return sorted.map(([id, count]) => {
       const player = players.find(p => p.id === Number(id));
       return player ? { name: player.name, count } : null;
     }).filter(Boolean);
+  };
+
+  const togglePlayerExpanded = (playerId) => {
+    setExpandedPlayers(prev => ({
+      ...prev,
+      [playerId]: !prev[playerId]
+    }));
   };
 
   return (
@@ -795,21 +802,35 @@ const GolfLeagueManager = () => {
                 {players.length === 0 ? (
                   <p className="text-gray-500 text-center py-8">Add players to see pairing history.</p>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-2">
                     {players.map((player) => {
-                      const mostPlayed = getMostPlayedWith(player.id);
+                      const allPlayed = getAllPlayedWith(player.id);
+                      const isExpanded = expandedPlayers[player.id];
                       return (
-                        <div key={player.id} className="border rounded-lg p-4">
-                          <h3 className="font-bold mb-3">{player.name} <span className="text-sm font-normal text-gray-600">(HCP: {player.handicap})</span></h3>
-                          {mostPlayed.length === 0 ? (
-                            <p className="text-sm text-gray-500">No pairings yet</p>
-                          ) : (
-                            <div className="space-y-2">
-                              <p className="text-sm font-medium text-gray-600">Most played with:</p>
-                              {mostPlayed.map((partner, index) => (
+                        <div key={player.id} className="border rounded-lg">
+                          <button
+                            onClick={() => togglePlayerExpanded(player.id)}
+                            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition"
+                          >
+                            <div className="flex items-center gap-3">
+                              {isExpanded ? (
+                                <ChevronDown size={20} className="text-gray-600" />
+                              ) : (
+                                <ChevronRight size={20} className="text-gray-600" />
+                              )}
+                              <h3 className="font-bold">{player.name}</h3>
+                              <span className="text-sm font-normal text-gray-600">(HCP: {player.handicap})</span>
+                            </div>
+                            <span className="text-sm text-gray-500">
+                              {allPlayed.length === 0 ? 'No pairings yet' : `${allPlayed.length} partner${allPlayed.length !== 1 ? 's' : ''}`}
+                            </span>
+                          </button>
+                          {isExpanded && allPlayed.length > 0 && (
+                            <div className="px-4 pb-4 space-y-2">
+                              {allPlayed.map((partner, index) => (
                                 <div key={index} className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded">
                                   <span className="text-sm">{partner.name}</span>
-                                  <span className="text-sm font-medium text-green-600">{partner.count} times</span>
+                                  <span className="text-sm font-medium text-green-600">{partner.count} time{partner.count !== 1 ? 's' : ''}</span>
                                 </div>
                               ))}
                             </div>
