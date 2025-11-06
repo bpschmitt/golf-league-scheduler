@@ -639,14 +639,14 @@ const GolfLeagueManager = () => {
                   </div>
 
                   {/* Manual Entry */}
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <input
                       type="text"
                       placeholder="Player Name"
                       value={newPlayerName}
                       onChange={(e) => setNewPlayerName(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
-                      className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
                     />
                     <input
                       type="number"
@@ -654,35 +654,38 @@ const GolfLeagueManager = () => {
                       value={newPlayerHandicap}
                       onChange={(e) => setNewPlayerHandicap(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && addPlayer()}
-                      className="w-32 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full sm:w-32 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
                       step="0.1"
                     />
                     <button
                       onClick={addPlayer}
-                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+                      className="w-full sm:w-auto px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2 text-sm sm:text-base"
                     >
-                      <Plus size={20} />
+                      <Plus size={18} className="sm:hidden" />
+                      <Plus size={20} className="hidden sm:block" />
                       Add
                     </button>
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 sm:justify-between sm:items-center mb-4">
                     <button
                       onClick={generateTeams}
                       disabled={players.length < 4}
-                      className="flex-1 mr-3 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-lg disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full sm:flex-1 sm:mr-3 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-base sm:text-lg disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      <Shuffle size={24} />
+                      <Shuffle size={20} className="sm:hidden" />
+                      <Shuffle size={24} className="hidden sm:block" />
                       Generate Teams
                     </button>
                     {players.length > 0 && (
                       <button
                         onClick={clearAllPlayers}
-                        className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium flex items-center gap-2"
+                        className="w-full sm:w-auto px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium flex items-center justify-center gap-2 text-base sm:text-base"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={18} className="sm:hidden" />
+                        <Trash2 size={20} className="hidden sm:block" />
                         Clear All
                       </button>
                     )}
@@ -732,11 +735,11 @@ const GolfLeagueManager = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3">
                       <h2 className="text-xl font-bold">Pending Teams</h2>
                       <button
                         onClick={saveWeek}
-                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                        className="w-full sm:w-auto px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm sm:text-base"
                       >
                         Save to History
                       </button>
@@ -769,28 +772,28 @@ const GolfLeagueManager = () => {
             {/* History Tab */}
             {activeTab === 'history' && (
               <div>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
                   <h2 className="text-xl font-bold">Team History {currentSeason && `(${currentSeason})`}</h2>
-                  <div className="flex gap-3">
-                    {weeklyArchive.length > 0 && (
-                      <>
-                        <button
-                          onClick={() => setShowSaveSeasonModal(true)}
-                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm flex items-center gap-2"
-                        >
-                          <Save size={16} />
-                          Save as Season
-                        </button>
-                        <button
-                          onClick={clearHistory}
-                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm flex items-center gap-2"
-                        >
-                          <Trash2 size={16} />
-                          Clear History
-                        </button>
-                      </>
-                    )}
-                  </div>
+                  {weeklyArchive.length > 0 && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setShowSaveSeasonModal(true)}
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm flex items-center justify-center gap-2"
+                      >
+                        <Save size={16} />
+                        <span className="hidden sm:inline">Save as Season</span>
+                        <span className="sm:hidden">Save</span>
+                      </button>
+                      <button
+                        onClick={clearHistory}
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm flex items-center justify-center gap-2"
+                      >
+                        <Trash2 size={16} />
+                        <span className="hidden sm:inline">Clear History</span>
+                        <span className="sm:hidden">Clear</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
                 {weeklyArchive.length === 0 ? (
                   <p className="text-gray-500 text-center py-8">No archived weeks yet.</p>
@@ -824,19 +827,19 @@ const GolfLeagueManager = () => {
             {/* Statistics Tab */}
             {activeTab === 'stats' && (
               <div>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
                   <h2 className="text-xl font-bold">Pairing History</h2>
                   {players.length > 0 && (
                     <div className="flex gap-2">
                       <button
                         onClick={expandAllPlayers}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
                       >
                         Expand All
                       </button>
                       <button
                         onClick={collapseAllPlayers}
-                        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition text-sm"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition text-sm"
                       >
                         Collapse All
                       </button>
