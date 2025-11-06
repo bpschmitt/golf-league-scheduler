@@ -286,7 +286,7 @@ const GolfLeagueManager = () => {
   };
 
   const getPairingKey = (id1, id2) => {
-    return [id1, id2].sort().join('-');
+    return [id1, id2].sort((a, b) => a - b).join('-');
   };
 
   const updatePairingHistory = (teams) => {
