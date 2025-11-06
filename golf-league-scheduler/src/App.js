@@ -587,27 +587,29 @@ const GolfLeagueManager = () => {
                     <p className="text-sm text-blue-700 mb-3">Upload a CSV file or paste CSV text with columns: Name, Handicap</p>
                     
                     {/* File Upload */}
-                    <div className="flex gap-3 items-center mb-3">
+                    <div className="space-y-2">
                       <input
                         type="file"
                         accept=".csv"
                         onChange={handleFileUpload}
-                        className="flex-1 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer"
+                        className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer"
                       />
-                      <button
-                        onClick={() => setShowTextInput(!showTextInput)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
-                      >
-                        {showTextInput ? 'Hide' : 'Paste'} Text
-                      </button>
-                      {players.length > 0 && (
+                      <div className="flex gap-2">
                         <button
-                          onClick={exportToCSV}
-                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm"
+                          onClick={() => setShowTextInput(!showTextInput)}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
                         >
-                          Export CSV
+                          {showTextInput ? 'Hide' : 'Paste'} Text
                         </button>
-                      )}
+                        {players.length > 0 && (
+                          <button
+                            onClick={exportToCSV}
+                            className="flex-1 sm:flex-none px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm"
+                          >
+                            Export CSV
+                          </button>
+                        )}
+                      </div>
                     </div>
 
                     {/* Text Input */}
