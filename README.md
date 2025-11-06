@@ -40,11 +40,11 @@ A smart web application for managing weekly golf league team pairings with intel
 
 ## 🚀 Quick Start
 
-### Option 1: Run Locally with Create React App
+### Run Locally with Create React App
 ```bash
 # Create the app
-npx create-react-app golf-league
-cd golf-league
+npx create-react-app golf-league-scheduler
+cd golf-league-scheduler
 
 # Install dependencies
 npm install lucide-react
@@ -73,30 +73,6 @@ module.exports = {
 **Replace `src/App.js`** with the component code, then:
 ```bash
 npm start
-```
-
-### Option 2: Single HTML File
-
-Create `golf-league.html` and open in your browser:
-```html
-
-
-
-  
-  
-  Golf League Manager
-  
-  
-  
-  
-
-
-  
-  
-    // [Component code here]
-  
-
-
 ```
 
 ## 📖 How to Use
