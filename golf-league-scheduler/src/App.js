@@ -506,7 +506,7 @@ const GolfLeagueManager = () => {
               }`}
             >
               <Shuffle size={20} />
-              Current Teams
+              Pending Teams
             </button>
             <button
               onClick={() => setActiveTab('history')}
@@ -700,7 +700,7 @@ const GolfLeagueManager = () => {
                 ) : (
                   <>
                     <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-xl font-bold">This Week's Teams</h2>
+                      <h2 className="text-xl font-bold">Pending Teams</h2>
                       <button
                         onClick={saveWeek}
                         className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
